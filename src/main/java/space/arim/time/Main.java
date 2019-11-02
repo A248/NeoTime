@@ -17,6 +17,7 @@ public class Main {
 		w = w + 6;
 		System.out.println(w);
 		scanner.close();
+		
 	}
 
 }
