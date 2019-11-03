@@ -169,6 +169,7 @@ public final class NeoTime {
 		 * <br>SECOND.neoValue() == 1000 == 10^3
 		 * 
 		 * @return neomilliseconds of the timespan
+		 * 
 		 * @author anandbeh
 		 */
 		public long neoValue() {
@@ -183,6 +184,7 @@ public final class NeoTime {
 		 * <br>SECOND.oldValue() == 1000
 		 * 
 		 * @return old milliseconds of the timespan
+		 * 
 		 * @author anandbeh
 		 */
 		public long oldValue() {
@@ -193,6 +195,7 @@ public final class NeoTime {
 		 * <br>Relies on the fact: 1 NeoDay = 1 old day
 		 * 
 		 * @return an old milliseconds value
+		 * 
 		 * @author anandbeh
 		 */
 		public long equivalentOld() {
@@ -203,6 +206,7 @@ public final class NeoTime {
 		 * Relies on the fact: 1 NeoDay = 1 old day
 		 * 
 		 * @return a neomilliseconds value
+		 * 
 		 * @author anandbeh
 		 */
 		public long equivalentNeo() {
