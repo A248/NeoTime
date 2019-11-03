@@ -57,6 +57,14 @@ public class NeoInstant {
 	private final int anchor;
 	private final long nano;
 	
+	/**
+	 * Creates a NeoInstant with given nanoseconds
+	 * 
+	 * @param nanoseconds
+	 * @see #NeoInstant(long, int)
+	 * 
+	 * @author anandbeh
+	 */
 	public NeoInstant(long nanoseconds) {
 		this.nano = nanoseconds;
 		this.anchor = 0;
@@ -64,7 +72,7 @@ public class NeoInstant {
 	
 	/**
 	 * Creates a NeoInstant from a specified
-	 * neonanoseconds and anchor value.
+	 * nanoseconds and anchor value.
 	 * 
 	 * <br><br>Without the anchor value, the nanoseconds specified are limited
 	 * to the range of a <code>long</code>. Thus, in order to store

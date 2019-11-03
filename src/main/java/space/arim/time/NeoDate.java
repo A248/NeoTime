@@ -141,7 +141,7 @@ public class NeoDate {
 	 * @author anandbeh
 	 */
 	public static NeoDate from(NeoInstant instant) {
-		return new NeoDate(instant.value());
+		return new NeoDate(instant.millis(true));
 	}
 	/**
 	 * Convert to NeoInstant
@@ -152,6 +152,6 @@ public class NeoDate {
 	 * @author anandbeh
 	 */
 	public NeoInstant toInstant() {
-		return new NeoInstant(getTime());
+		return new NeoInstant(getTime()*1000L);
 	}
 }

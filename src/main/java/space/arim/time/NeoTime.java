@@ -8,6 +8,8 @@ package space.arim.time;
  */
 public final class NeoTime {
 	
+	private NeoTime() {}
+	
 	/**
 	 * Equivalent of old time's {@link System#nanoTime() System.nanoTime()}
 	 * 
@@ -15,7 +17,7 @@ public final class NeoTime {
 	 * @author anandbeh
 	 */
 	public static long nanoTime() {
-		return scaleNeoFromOld(System.nanoTime());
+		return scaleNeoFromOld(System.nanoTime() - 946684800000L);
 	}
 	
 	/**
@@ -26,7 +28,7 @@ public final class NeoTime {
 	 * @author anandbeh
 	 */
 	public static long currentTimeMillis() {
-		return scaleNeoFromOld(System.currentTimeMillis());
+		return scaleNeoFromOld(System.currentTimeMillis() - 946684800L);
 	}
 	
 	/**
@@ -44,15 +46,19 @@ public final class NeoTime {
 	 * <br>- Scaling simply multiplies an old value by a constant. In pure scaling, 0 always maps to 0.
 	 * <br>- Conversion accounts for differences in starting values. Sometimes conversion also includes scaling.
 	 * 
-	 * <br><br>For instance, Celsius -> Fahrenheit is a conversion.
+	 * <br><br>For instance, Celsius <-> Kelvin is conversion, where:
+	 * <br><code>Kelvin = Celsius + 273</code>
+	 * <br>This is because Kelvin starts at absolute zero. It cannot be negative, since you can't go below absolute zero.
+	 * Celsius starts at the boiling point of water. Its lowest possible value is -273.15.
+	 * <br><br>Fahrenheith <-> Celsius is <i>also</i> a conversion, but it also involves scaling.
 	 * To get Fahrenheit (the good-for-nothing temperature), one must
 	 * first scale Celsius and THEN add 32 degrees, like so:
 	 * <br><code>Fahrenheit = (9/5 * Celsius) + 32</code>
 	 * <br><code>Celsius = (Fahrenheit - 32) * 5/9</code>
-	 * This is because Fahrenheit and Celsius start at different places:
-	 * <br>- Celsius starts at 0, the freezing point of water.
-	 * <br>- No one knows where Fahrenheit is supposed to start, but 0 degrees Fahrenheit sure isn't the freezing point of water.
-	 * Furthermore,
+	 * <br><br>However, these formulas, intended for <i>temperature conversions</i>, should not be used for <i>changes in temperature</i>
+	 * If the temperature increases by 5/9 degree Celsius, that is <i>NOT</i> equivalent to
+	 * a 33 degree Fahrenheit increase.
+	 * <br>The lesson: Use conversion for absolute numbers (e.g. temperature in the room) and scaling for relative values (e.g. change in temperature)
 	 * 
 	 * <br><br><b>TL;DR</b>
 	 * <br>- Use scaling for timespans (10 seconds, 14 minutes, 3 years)
@@ -64,7 +70,7 @@ public final class NeoTime {
 	 * @author anandbeh
 	 */
 	public static long convertNeo(long neomilliseconds) {
-		return 0L;
+		return scaleOldFromNeo(neomilliseconds) + 946684800L;
 	}
 	
 	/**
@@ -79,7 +85,7 @@ public final class NeoTime {
 	 * @author anandbeh
 	 */
 	public static long convertOld(long oldmilliseconds) {
-		return 0L;
+		return scaleNeoFromOld(oldmilliseconds - 946684800L);
 	}
 	
 	/**
