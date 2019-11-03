@@ -126,6 +126,9 @@ public final class NeoTime {
 	 * TimeSpan enums are used for simple conversions when
 	 * an amount of days other than milliseconds is already known.
 	 * 
+	 * A TimeSpan can represent a unit of time in either
+	 * old time or NeoTime depending on the context it is used in
+	 * 
 	 * <br><br>Helpful methods:<br>
 	 * {@link TimeSpan#neoValue()}
 	 * {@link TimeSpan#oldValue()}
@@ -158,12 +161,12 @@ public final class NeoTime {
 		 * this method gets the timespan's value in neomilliseconds.
 		 * 
 		 * <br>Since NeoTime is simply scaled by factors of ten,
-		 * you could just do simple math with powers of ten.
+		 * you could just do simple math.
 		 * <br>
 		 * <br>e.g.:
-		 * DAY.neoValue() == 1000000 == 10^6
-		 * MINUTE.neoValue() == 10000 == 10^4
-		 * SECOND.neoValue() == 1000 == 10^3
+		 * <br>DAY.neoValue() == 1000000 == 10^6
+		 * <br>MINUTE.neoValue() == 10000 == 10^4
+		 * <br>SECOND.neoValue() == 1000 == 10^3
 		 * 
 		 * @return neomilliseconds of the timespan
 		 * @author anandbeh
