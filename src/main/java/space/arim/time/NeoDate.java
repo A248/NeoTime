@@ -4,10 +4,9 @@ package space.arim.time;
  * 
  * A NeoTime replacement for {@link java.util.Date Date}
  * 
- * Represents an instance in time.
+ * Represents an slice in time. For better precision, use {@link space.arim.time.NeoInstant NeoInstant}
  * 
  * @author anandbeh
- *
  * 
  */
 public class NeoDate {
@@ -16,6 +15,8 @@ public class NeoDate {
 	 * measured to the nearest neomillisecond.
 	 * 
 	 * @see NeoTime#currentTimeMillis()
+	 * 
+	 * @author anandbeh
      */
 	public NeoDate() {
 		this(NeoTime.currentTimeMillis());
@@ -26,6 +27,8 @@ public class NeoDate {
      *
      * @param   milliseconds   the milliseconds since January 1, 2000
      * @see     NeoTime#currentTimeMillis()
+     * 
+     * @author anandbeh
      */
 	public NeoDate(long milliseconds) {
 		this.milliseconds = milliseconds;
@@ -39,6 +42,8 @@ public class NeoDate {
 	 * 
 	 * @return milliseconds of this date
 	 * @see NeoTime#currentTimeMillis()
+	 * 
+	 * @author anandbeh
 	 */
 	public long getTime() {
 		return this.milliseconds;
@@ -51,6 +56,8 @@ public class NeoDate {
 	 * (Similar to {@link Date#before})
 	 * 
 	 * @return true if this date is before the specified date.
+	 * 
+	 * @author anandbeh
 	 */
 	public boolean before(NeoDate when) {
 		return this.milliseconds < when.getTime();
@@ -60,6 +67,8 @@ public class NeoDate {
 	 * (Similar to {@link Date#after})
 	 * 
 	 * @return true if this date is after the specified date.
+	 * 
+	 * @author anandbeh
 	 */
 	public boolean after(NeoDate when) {
 		return this.milliseconds > when.getTime();
@@ -69,6 +78,8 @@ public class NeoDate {
 	 * (Similar to {@link Date#equals})
 	 * 
 	 * @return true if their {@link #getTime() getTime()} methods return the same value.
+	 * 
+	 * @author anandbeh
 	 */
 	public boolean equals(Object object) {
 		if (object instanceof NeoDate) {
@@ -84,6 +95,8 @@ public class NeoDate {
 	 * 
 	 * @return 0 if dates are equal, -1 is this date is less than specified date,
 	 * and 1 if this date is greater than specified date.
+	 * 
+	 * @author anandbeh
 	 */
 	public int compareTo(NeoDate anotherDate) {
 		
@@ -94,6 +107,8 @@ public class NeoDate {
 	/**
 	 * Returns a hash code value for this object.
 	 * (Similar to {@link Date#hashCode})
+	 * 
+	 * @author anandbeh
 	 */
 	public int hashCode() {
         long ht = this.getTime();
@@ -109,6 +124,8 @@ public class NeoDate {
 	 * To format a date use {@link NeoDateFormatter#format}
 	 * 
 	 * @return a string identical to String.valueOf(this.getTime())
+	 * 
+	 * @author anandbeh
 	 */
 	public String toString() {
 		return Long.toString(getTime());
@@ -120,6 +137,8 @@ public class NeoDate {
 	 * @param instant - a NeoInstant
 	 * @return a NeoDate based on the specified NeoInstant.
 	 * @see NeoInstant
+	 * 
+	 * @author anandbeh
 	 */
 	public static NeoDate from(NeoInstant instant) {
 		return new NeoDate(instant.value());
@@ -129,6 +148,8 @@ public class NeoDate {
 	 * 
 	 * @return a NeoInstant based on this NeoDate's getTime() value
 	 * @see NeoInstant
+	 * 
+	 * @author anandbeh
 	 */
 	public NeoInstant toInstant() {
 		return new NeoInstant(getTime());
