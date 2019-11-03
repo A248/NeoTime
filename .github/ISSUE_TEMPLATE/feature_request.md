@@ -2,7 +2,7 @@
 name: Feature request
 about: Idea Suggestion
 title: Unnamed Feature Request
-labels: enhancement
+labels: feature
 assignees: A248, Orchist227
 
 ---
