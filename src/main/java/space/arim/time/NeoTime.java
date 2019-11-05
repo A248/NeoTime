@@ -11,24 +11,16 @@ public final class NeoTime {
 	private NeoTime() {}
 	
 	/**
-	 * Equivalent of old time's {@link System#nanoTime() System.nanoTime()}
-	 * 
-	 * @return  current neonanoseconds
-	 * @author anandbeh
-	 */
-	public static long nanoTime() {
-		return scaleNeoFromOld(System.nanoTime() - 946684800000L);
-	}
-	
-	/**
 	 * Returns the value of the current time in neomilliseconds
 	 * Equivalent of old time's {@link System#currentTimeMillis() System.currentTimeMillis()}
 	 * 
 	 * @return  current neomilliseconds.
+	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 */
 	public static long currentTimeMillis() {
-		return scaleNeoFromOld(System.currentTimeMillis() - 946684800L);
+		return System.currentTimeMillis()*5L/432L - 946_684_800_000L;
 	}
 	
 	/**
@@ -68,9 +60,10 @@ public final class NeoTime {
 	 * @return long - old milliseconds equivalence
 	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 */
-	public static long convertNeo(long neomilliseconds) {
-		return scaleOldFromNeo(neomilliseconds) + 946684800L;
+	public static long convertNeo(long neoMilliseconds) throws ArithmeticException {
+		return Math.addExact(scaleNeo(neoMilliseconds), 946_684_800_000L);
 	}
 	
 	/**
@@ -83,9 +76,10 @@ public final class NeoTime {
 	 * @return long - neomilliseconds equivalence
 	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 */
-	public static long convertOld(long oldmilliseconds) {
-		return scaleNeoFromOld(oldmilliseconds - 946684800L);
+	public static long convertOld(long oldMilliseconds) throws ArithmeticException {
+		return scaleOld(Math.subtractExact(oldMilliseconds, 946_684_800_000L));
 	}
 	
 	/**
@@ -99,10 +93,11 @@ public final class NeoTime {
 	 * @return long - equivalent value in old time
 	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 * 
 	 */
-	public static long scaleOldFromNeo(long neomilliseconds) {
-		return neomilliseconds*864L/10L;
+	public static long scaleNeo(long neoMilliseconds) throws ArithmeticException {
+		return Math.multiplyExact(neoMilliseconds, 432L)/5L;
 	}
 	
 	/**
@@ -116,10 +111,11 @@ public final class NeoTime {
 	 * @return long - equivalent value in NeoTime
 	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 * 
 	 */
-	public static long scaleNeoFromOld(long oldmilliseconds) {
-		return oldmilliseconds*10L/864L;
+	public static long scaleOld(long oldMilliseconds) throws ArithmeticException {
+		return Math.multiplyExact(oldMilliseconds, 5L)/432L;
 	}
 	
 	/**
@@ -136,6 +132,7 @@ public final class NeoTime {
 	 * {@link TimeSpan#equivalentNeo()}
 	 * 
 	 * @author anandbeh
+	 * @since NeoTime 1.0
 	 *
 	 */
 	public enum TimeSpan {
@@ -171,6 +168,7 @@ public final class NeoTime {
 		 * @return neomilliseconds of the timespan
 		 * 
 		 * @author anandbeh
+		 * @since NeoTime 1.0
 		 */
 		public long neoValue() {
 			return this.neoValue;
@@ -186,6 +184,7 @@ public final class NeoTime {
 		 * @return old milliseconds of the timespan
 		 * 
 		 * @author anandbeh
+		 * @since NeoTime 1.0
 		 */
 		public long oldValue() {
 			return this.oldValue;
@@ -197,9 +196,11 @@ public final class NeoTime {
 		 * @return an old milliseconds value
 		 * 
 		 * @author anandbeh
+		 * @since NeoTime 1.0
+		 * 
 		 */
 		public long equivalentOld() {
-			return neoValue()*DAY.oldValue()/DAY.neoValue();
+			return scaleNeo(neoValue());
 		}
 		/**
 		 * Converts an old timespan to a NeoTime timespan
@@ -208,9 +209,11 @@ public final class NeoTime {
 		 * @return a neomilliseconds value
 		 * 
 		 * @author anandbeh
+		 * @since NeoTime 1.0
+		 * 
 		 */
 		public long equivalentNeo() {
-			return oldValue()*DAY.neoValue()/DAY.oldValue();
+			return scaleOld(oldValue());
 		}
 	}
 }
