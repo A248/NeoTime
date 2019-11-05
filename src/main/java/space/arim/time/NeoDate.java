@@ -1,5 +1,7 @@
 package space.arim.time;
 
+import java.io.Serializable;
+
 /**
  * 
  * A NeoTime replacement for {@link java.util.Date Date}
@@ -7,9 +9,14 @@ package space.arim.time;
  * Represents an slice in time. For better precision, use {@link space.arim.time.NeoInstant NeoInstant}
  * 
  * @author anandbeh
+ * @since NeoTime 1.0
  * 
  */
-public class NeoDate {
+public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2287011378139968722L;
 	private long milliseconds;
 	/** Initialises a <code>NeoDate</code> object with the current time
 	 * measured to the nearest neomillisecond.
@@ -22,23 +29,29 @@ public class NeoDate {
 		this(NeoTime.currentTimeMillis());
 	}
     /**
-     * Initialises a <code>NeoDate</code> object with its milliseconds value set to
-     * January 1, 2000 at 00:00:00 UTC
+     * Initialises a <code>NeoDate</code> object
+     * with its milliseconds value set as specified
      *
-     * @param   milliseconds   the milliseconds since January 1, 2000
-     * @see     NeoTime#currentTimeMillis()
+     * @param   milliseconds   the neomilliseconds since January 1, 2000
      * 
      * @author anandbeh
      */
 	public NeoDate(long milliseconds) {
 		this.milliseconds = milliseconds;
 	}
+	/**
+	 * Clones this NeoDate with the same exact amount of milliseconds.
+	 * 
+	 * @return NeoDate - an identical NeoDate
+	 * 
+	 * @author anandbeh
+	 */
 	public NeoDate clone() {
-		return new NeoDate(this.milliseconds);
+		return new NeoDate(getTime());
 	}
 	/**
 	 * Gets the <code>long</code> value corresponding to this date.
-	 * (Similar to {@link Date#getTime})
+	 * (Similar to {@link java.util.Date#getTime Date.getTime})
 	 * 
 	 * @return milliseconds of this date
 	 * @see NeoTime#currentTimeMillis()
@@ -53,7 +66,7 @@ public class NeoDate {
 	}
 	/**
 	 * Checks if this date is earlier in time.
-	 * (Similar to {@link Date#before})
+	 * (Similar to {@link java.util.Date#before Data.before})
 	 * 
 	 * @return true if this date is before the specified date.
 	 * 
@@ -64,7 +77,7 @@ public class NeoDate {
 	}
 	/**
 	 * Checks if this date is later in time.
-	 * (Similar to {@link Date#after})
+	 * (Similar to {@link java.util.Date#after Date.after})
 	 * 
 	 * @return true if this date is after the specified date.
 	 * 
@@ -75,12 +88,13 @@ public class NeoDate {
 	}
 	/**
 	 * Compares this date to another for equality.
-	 * (Similar to {@link Date#equals})
+	 * (Similar to {@link java.util.Date#equals Date.equals})
 	 * 
 	 * @return true if their {@link #getTime() getTime()} methods return the same value.
 	 * 
 	 * @author anandbeh
 	 */
+	@Override
 	public boolean equals(Object object) {
 		if (object instanceof NeoDate) {
 			return ((NeoDate) object).getTime() == getTime();
@@ -89,15 +103,16 @@ public class NeoDate {
 	}
 	/**
 	 * Compares this date to another for ordering.
-	 * (Similar to {@link Date#compareTo})
+	 * (Similar to {@link java.util.Date#compareTo Date.compareTo})
 	 * 
-	 * Evaluation uses {@link NeoDate#getTime() getTime()}
+	 * Evaluation uses {@link #getTime() getTime()}
 	 * 
 	 * @return 0 if dates are equal, -1 is this date is less than specified date,
 	 * and 1 if this date is greater than specified date.
 	 * 
 	 * @author anandbeh
 	 */
+	@Override
 	public int compareTo(NeoDate anotherDate) {
 		
 		long thisTime = getTime();
@@ -106,10 +121,11 @@ public class NeoDate {
 	}
 	/**
 	 * Returns a hash code value for this object.
-	 * (Similar to {@link Date#hashCode})
+	 * (Similar to {@link java.util.Date#hashCode Date.hashCode})
 	 * 
 	 * @author anandbeh
 	 */
+	@Override
 	public int hashCode() {
         long ht = this.getTime();
         return (int) ht ^ (int) (ht >> 32);
@@ -117,16 +133,17 @@ public class NeoDate {
 	/**
 	 * Converts this date to a String.
 	 * 
-	 * This method differs remarkably from {@link Date#toString} in that
-	 * this simply returns the string value of {@link NeoDate#getTime()},
+	 * This method differs remarkably from {@link java.util.Date#toString Date.toString} in that
+	 * this simply returns the string value of {@link NeoDate#getTime() NeoDate.getTime()},
 	 * rather than formatting this date.
 	 * 
-	 * To format a date use {@link NeoDateFormatter#format}
+	 * To format a date use {@link space.arim.time.NeoDateFormatter#format NeoDateFormatter.format}
 	 * 
-	 * @return a string identical to String.valueOf(this.getTime())
+	 * @return a string identical to Long.toString(this.getTime())
 	 * 
 	 * @author anandbeh
 	 */
+	@Override
 	public String toString() {
 		return Long.toString(getTime());
 	}
@@ -141,7 +158,7 @@ public class NeoDate {
 	 * @author anandbeh
 	 */
 	public static NeoDate from(NeoInstant instant) {
-		return new NeoDate(instant.millis(true));
+		return new NeoDate(instant.getMillis());
 	}
 	/**
 	 * Convert to NeoInstant
@@ -152,6 +169,6 @@ public class NeoDate {
 	 * @author anandbeh
 	 */
 	public NeoInstant toInstant() {
-		return new NeoInstant(getTime()*1000L);
+		return NeoInstant.ofMillis(getTime());
 	}
 }
