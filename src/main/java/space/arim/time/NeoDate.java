@@ -1,22 +1,21 @@
 package space.arim.time;
 
-import java.io.Serializable;
-
 /**
  * 
  * A NeoTime replacement for {@link java.util.Date Date}
  * 
- * Represents an slice in time. For better precision, use {@link space.arim.time.NeoInstant NeoInstant}
+ * Represents an slice in time. NeoDates are mutable.
+ * For better precision and/or thread-safety, use {@link space.arim.time.NeoInstant NeoInstant}
  * 
  * @author anandbeh
  * @since NeoTime 1.0
  * 
  */
-public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2287011378139968722L;
+public class NeoDate implements Cloneable, Comparable<NeoDate> {
+	
+	public static final NeoDate EPOCH = new NeoDate(0);
+	
+	//private static final long serialVersionUID = -2287011378139968722L;
 	private long milliseconds;
 	/** Initialises a <code>NeoDate</code> object with the current time
 	 * measured to the nearest neomillisecond.
@@ -28,6 +27,7 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public NeoDate() {
 		this(NeoTime.currentTimeMillis());
 	}
+	
     /**
      * Initialises a <code>NeoDate</code> object
      * with its milliseconds value set as specified
@@ -39,6 +39,7 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public NeoDate(long milliseconds) {
 		this.milliseconds = milliseconds;
 	}
+	
 	/**
 	 * Clones this NeoDate with the same exact amount of milliseconds.
 	 * 
@@ -46,9 +47,11 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	 * 
 	 * @author anandbeh
 	 */
+	@Override
 	public NeoDate clone() {
 		return new NeoDate(getTime());
 	}
+	
 	/**
 	 * Gets the <code>long</code> value corresponding to this date.
 	 * (Similar to {@link java.util.Date#getTime Date.getTime})
@@ -61,9 +64,19 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public long getTime() {
 		return this.milliseconds;
 	}
+	
+	/**
+	 * Sets the current time of this date to the given value.
+	 * 
+	 * 
+	 * @param time a neomilliseconds value
+	 * 
+	 * @author anandbeh
+	 */
 	public void setTime(long time) {
 		this.milliseconds = time;
 	}
+	
 	/**
 	 * Checks if this date is earlier in time.
 	 * (Similar to {@link java.util.Date#before Data.before})
@@ -75,6 +88,7 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public boolean before(NeoDate when) {
 		return this.milliseconds < when.getTime();
 	}
+	
 	/**
 	 * Checks if this date is later in time.
 	 * (Similar to {@link java.util.Date#after Date.after})
@@ -86,6 +100,7 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public boolean after(NeoDate when) {
 		return this.milliseconds > when.getTime();
 	}
+	
 	/**
 	 * Compares this date to another for equality.
 	 * (Similar to {@link java.util.Date#equals Date.equals})
@@ -97,13 +112,13 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof NeoDate) {
-			return ((NeoDate) object).getTime() == getTime();
+			return this.compareTo((NeoDate) object) == 0;
 		}
 		return false;
 	}
+	
 	/**
 	 * Compares this date to another for ordering.
-	 * (Similar to {@link java.util.Date#compareTo Date.compareTo})
 	 * 
 	 * Evaluation uses {@link #getTime() getTime()}
 	 * 
@@ -113,12 +128,10 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	 * @author anandbeh
 	 */
 	@Override
-	public int compareTo(NeoDate anotherDate) {
-		
-		long thisTime = getTime();
-		long otherTime = anotherDate.getTime();
-		return (thisTime<otherTime ? -1 : (thisTime==otherTime ? 0 : 1));
+	public int compareTo(NeoDate otherDate) {
+		return (getTime() < otherDate.getTime()) ? -1 : (getTime() > otherDate.getTime()) ? 1 : 0;
 	}
+	
 	/**
 	 * Returns a hash code value for this object.
 	 * (Similar to {@link java.util.Date#hashCode Date.hashCode})
@@ -127,9 +140,9 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	 */
 	@Override
 	public int hashCode() {
-        long ht = this.getTime();
-        return (int) ht ^ (int) (ht >> 32);
+        return (int) getTime() ^ (int) (getTime() >> 32);
 	}
+	
 	/**
 	 * Converts this date to a String.
 	 * 
@@ -157,9 +170,10 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	 * 
 	 * @author anandbeh
 	 */
-	public static NeoDate from(NeoInstant instant) {
+	public static NeoDate from(NeoInstant instant) throws ArithmeticException {
 		return new NeoDate(instant.getMillis());
 	}
+	
 	/**
 	 * Convert to NeoInstant
 	 * 
@@ -171,4 +185,5 @@ public class NeoDate implements Serializable, Cloneable, Comparable<NeoDate> {
 	public NeoInstant toInstant() {
 		return NeoInstant.ofMillis(getTime());
 	}
+	
 }
