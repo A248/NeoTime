@@ -2,7 +2,7 @@
 
 NeoTime is a base-ten system of time measurement. It is a superior alternative to the traditional 365-day year. 1 neomillisecond
 
-** Introduction **
+**Introduction**
 
 The old-fashioned clock is outdated. It multiplies by arbitrary values (60, 24, 7, 52) to convert between kinds of dates. This leads to all sorts of unnecessary confusion and calculation. Why follow such odd conversions?
 
@@ -12,7 +12,7 @@ A neocentisecond (ncs) is the common unit of time for NeoTime users.
 <br>To get a sense of NeoTime, you may rely on:
 <br>1 ncs = 0.864 old seconds
 
-** Basic Usage: Developers **
+**Basic Usage: Developers**
 
 * Use NeoTime#currentTimeMillis() to get the current time as a long value.
 * Use the NeoDate class to replace java.util.Date
