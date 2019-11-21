@@ -6,6 +6,8 @@
   <name>NeoTime</name>
   <description>NeoTime is a base-ten system of time measurement. It is a superior alternative to the traditional 365-day year.</description>
   <build>
+    <sourceDirectory>src</sourceDirectory>
+    <finalName>${project.name}_v${project.version}</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
