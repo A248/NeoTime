@@ -41,18 +41,6 @@ public final class NeoTime {
 	}
 	
 	/**
-	 * Returns {@link #currentTimeMillis() NeoTime.currentTimeMillis()}
-	 * 
-	 * <br><br><b>Deprecated because it's an unnecessary layer</b>
-	 * 
-	 * @see #currentTimeMillis()
-	 */
-	@Deprecated
-	public static long getCurrentTime() {
-		return currentTimeMillis();
-	}
-	
-	/**
 	 * Converts NeoTime to old time
 	 * Not to be confused with scaling.
 	 * 
