@@ -1,6 +1,5 @@
 # NeoTime
-
-NeoTime is a base-ten system of time measurement. It is a superior alternative to the traditional 365-day year. 1 neomillisecond
+A base-ten system of time measurement. It is a superior alternative to the traditional 365-day year.
 
 **Introduction**
 
@@ -14,6 +13,6 @@ A neocentisecond (ncs) is the common unit of time for NeoTime users.
 
 **Basic Usage: Developers**
 
-* Use NeoTime#currentTimeMillis() to get the current time as a long value.
-* Use the NeoDate class to replace java.util.Date
-* Use the NeoInstant class to replace java.time.Instant
+* Use `NeoTime.currentTimeMillis()` to get the current time as a long value.
+* Use the `NeoDate` class to replace `java.util.Date`
+* Use the `NeoInstant` class to replace `java.time.Instant`
