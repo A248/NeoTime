@@ -1,13 +1,15 @@
 ## Mac ##
 .DS_Store
 
+### Maven ###
+
+target/
+dependency-reduced-pom.xml
 
 ### Eclipse ###
 
-target/
+codetemplates.xml
 bin/
-.classpath
-.project
 .metadata
 tmp/
 *.tmp
