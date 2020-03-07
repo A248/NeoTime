@@ -1,23 +1,30 @@
 package space.arim.time;
 
+import java.io.Serializable;
+
 /**
- * 
- * A NeoTime replacement for {@link java.util.Date Date}
- * 
- * Represents an slice in time. NeoDates are mutable.
- * For better precision and/or thread-safety, use {@link space.arim.time.NeoInstant NeoInstant}
+ * A NeoTime replacement for {@link java.util.Date Date}. NeoDate is serialisable. <br>
+ * <br>
+ * Represents a slice in time. NeoDates are mutable.
+ * For better precision and/or thread safety, use {@link space.arim.time.NeoInstant NeoInstant}
  * 
  * @author anandbeh
  * @since NeoTime 1.0
  * 
  */
-public class NeoDate implements Cloneable, Comparable<NeoDate> {
+public class NeoDate implements Cloneable, Comparable<NeoDate>, Serializable {
 	
-	public static final NeoDate EPOCH = new NeoDate(0);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1471048339114274142L;
 	
-	//private static final long serialVersionUID = -2287011378139968722L;
+	public static final NeoDate EPOCH = new NeoDate(0L);
+	
 	private long milliseconds;
-	/** Initialises a <code>NeoDate</code> object with the current time
+	
+	/**
+	 * Initialises a <code>NeoDate</code> object with the current time
 	 * measured to the nearest neomillisecond.
 	 * 
 	 * @see NeoTime#currentTimeMillis()
@@ -32,7 +39,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
      * Initialises a <code>NeoDate</code> object
      * with its milliseconds value set as specified
      *
-     * @param   milliseconds   the neomilliseconds since January 1, 2000
+     * @param milliseconds the neomilliseconds since January 1, 2000
      * 
      * @author anandbeh
      */
@@ -43,7 +50,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
 	/**
 	 * Clones this NeoDate with the same exact amount of milliseconds.
 	 * 
-	 * @return NeoDate - an identical NeoDate
+	 * @return an identical NeoDate
 	 * 
 	 * @author anandbeh
 	 */
@@ -86,7 +93,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
 	 * @author anandbeh
 	 */
 	public boolean before(NeoDate when) {
-		return this.milliseconds < when.getTime();
+		return getTime() < when.getTime();
 	}
 	
 	/**
@@ -98,7 +105,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
 	 * @author anandbeh
 	 */
 	public boolean after(NeoDate when) {
-		return this.milliseconds > when.getTime();
+		return getTime() > when.getTime();
 	}
 	
 	/**
@@ -111,10 +118,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if (object instanceof NeoDate) {
-			return this.compareTo((NeoDate) object) == 0;
-		}
-		return false;
+		return object instanceof NeoDate && ((NeoDate) object).getTime() == getTime();
 	}
 	
 	/**
@@ -164,7 +168,7 @@ public class NeoDate implements Cloneable, Comparable<NeoDate> {
 	/**
 	 * Convert NeoInstant to NeoDate
 	 * 
-	 * @param instant - a NeoInstant
+	 * @param instant a NeoInstant
 	 * @return a NeoDate based on the specified NeoInstant.
 	 * @see NeoInstant
 	 * 

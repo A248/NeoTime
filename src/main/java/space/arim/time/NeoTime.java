@@ -31,7 +31,7 @@ public final class NeoTime {
 	 * Returns the value of the current time in neomilliseconds
 	 * <br>Equivalent of old time's {@link System#currentTimeMillis() System.currentTimeMillis()}
 	 * 
-	 * @return  current neomilliseconds.
+	 * @return current neomilliseconds
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -66,8 +66,8 @@ public final class NeoTime {
 	 * <br>- Use scaling for timespans (10 seconds, 14 minutes, 3 years)
 	 * <br>- Use conversion for dates and absolute times (1000000 NMS, 14 January 2019)
 	 * 
-	 * @param neomilliseconds - long to be converted
-	 * @return long - old milliseconds equivalence
+	 * @param neomilliseconds the neotime value to convert
+	 * @return old milliseconds equivalence
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -77,13 +77,13 @@ public final class NeoTime {
 	}
 	
 	/**
-	 * Converts old time to NeoTime
-	 * 
+	 * Converts old time to NeoTime. <br>
+	 * <br>
 	 * See {@link NeoTime#convertNeo(long)} for explanation on
 	 * the distinction between scaling and conversion.
 	 * 
-	 * @param oldmilliseconds - long to be converted
-	 * @return long - neomilliseconds equivalence
+	 * @param oldmilliseconds the old time value to convert
+	 * @return neomilliseconds equivalence
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -93,14 +93,14 @@ public final class NeoTime {
 	}
 	
 	/**
-	 * Scales, not converts, NeoTime to old time
-	 * <br>See {@link NeoTime#convertNeo} for conversion
+	 * Scales, not converts, NeoTime to old time. <br>
+	 * See {@link NeoTime#convertNeo} for conversion. <br>
+	 * <br>
+	 * It doesn't matter whether you specify a value in neomilliseconds
+	 * or neonanoseconds, because that's how math works.
 	 * 
-	 * <br><br>It doesn't matter whether you specify a value in neomilliseconds
-	 * or neonanoseconds, because that's how math works
-	 * 
-	 * @param long - the time, in neomilliseconds (or nano), you want to convert
-	 * @return long - equivalent value in old time
+	 * @param the time, in neomilliseconds (or nano), you want to convert
+	 * @return the equivalent value in old time
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0

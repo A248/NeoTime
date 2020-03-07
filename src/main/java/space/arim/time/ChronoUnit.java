@@ -2,22 +2,23 @@ package space.arim.time;
 
 /**
  * ChronoUnit enums are used for simple conversions when
- * an amount of days other than milliseconds is already known.
- * 
- * <br><br>A ChronoUnit can represent a unit of time in either
+ * an amount of days other than milliseconds is already known. <br>
+ * <br>
+ * A ChronoUnit can represent a unit of time in either
  * old time or NeoTime depending on the context it is used in
  * 
  * <br><br>Helpful methods:<br>
- * {@link TimeSpan#neoValue()}
- * {@link TimeSpan#oldValue()}
- * {@link TimeSpan#equivalentOld()}
- * {@link TimeSpan#equivalentNeo()}
+ * {@link #neoValue()}
+ * {@link #oldValue()}
+ * {@link #equivalentOld()}
+ * {@link #equivalentNeo()}
  * 
  * @author anandbeh
  * @since NeoTime 1.0
  *
  */
 public enum ChronoUnit {
+	
 	MILLENIUM(1000000000000L, 31536000000000L),
 	CENTURY(100000000000L, 3153600000000L),
 	DECADE(10000000000L, 315360000000L),
@@ -29,14 +30,17 @@ public enum ChronoUnit {
 	MINUTE(10000L, 60000L),
 	SECOND(1000L, 1000L),
 	MILLISECOND(1L, 1L);
+	
 	private final long neoValue;
 	private final long oldValue;
+	
 	private ChronoUnit(long neoValue, long oldValue) {
 		this.neoValue = neoValue;
 		this.oldValue = oldValue;
 	}
+	
 	/**
-	 * Supposing this TimeSpan to be in NeoTime (e.g. NeoDay or NenMinute),
+	 * Supposing this ChronoUnit to be in NeoTime (e.g. neo day or neo minute),
 	 * this method gets the timespan's value in neomilliseconds.
 	 * 
 	 * <br>Since NeoTime is simply scaled by factors of ten,
@@ -55,8 +59,9 @@ public enum ChronoUnit {
 	public long neoValue() {
 		return this.neoValue;
 	}
+	
 	/**
-	 * Supposing this TimeSpan to be in old time,
+	 * Supposing this ChronoUnit to be in old time,
 	 * this method gets the old timespan's value in old milliseconds
 	 * <br>
 	 * <br>e.g.:
@@ -71,6 +76,7 @@ public enum ChronoUnit {
 	public long oldValue() {
 		return this.oldValue;
 	}
+	
 	/**
 	 * Converts a NeoTime timespan to an old timespan
 	 * <br>Relies on the fact: 1 NeoDay = 1 old day
@@ -84,6 +90,7 @@ public enum ChronoUnit {
 	public long equivalentOld() {
 		return NeoTime.scaleNeo(neoValue());
 	}
+	
 	/**
 	 * Converts an old timespan to a NeoTime timespan
 	 * <br>Relies on the fact: 1 NeoDay = 1 old day
@@ -97,4 +104,5 @@ public enum ChronoUnit {
 	public long equivalentNeo() {
 		return NeoTime.scaleOld(oldValue());
 	}
+	
 }

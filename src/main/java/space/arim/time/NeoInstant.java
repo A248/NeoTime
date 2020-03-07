@@ -1,24 +1,26 @@
 package space.arim.time;
 
+import java.io.Serializable;
+
 // TODO Add documentation for NeoInstant methods
 /**
  * 
- * A NeoTime replacement for {@link java.time.Instant Instant}.
- * 
- * <br><br>Represents a precise point in time
+ * A NeoTime replacement for {@link java.time.Instant Instant}. <br>
+ * <br>
+ * Represents a precise point in time. Immutable and thread safe.
  * 
  * @see NeoDate
- * 
- * @implSpec
- * Immutable and thread-safe.
  * 
  * @author anandbeh
  * @since NeoTime 1.0
  */
-public final class NeoInstant implements Comparable<NeoInstant> {
-
-	//private static final long serialVersionUID = 3198830659677472215L;
-
+public final class NeoInstant implements Comparable<NeoInstant>, Serializable {
+	
+	/**
+	 * serial version uid
+	 */
+	private static final long serialVersionUID = 2345591517810354057L;
+	
 	public static final NeoInstant EPOCH = new NeoInstant(0L, 0);
 	
 	private final long neoSeconds;
@@ -69,7 +71,7 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	 * @since NeoTime 1.0
 	 */
 	public static NeoInstant ofMillis(long neoMilliseconds) {
-        return new NeoInstant(Math.floorDiv(neoMilliseconds, 1000L), (int)Math.floorMod(neoMilliseconds, 1000L));
+        return new NeoInstant(Math.floorDiv(neoMilliseconds, 1000L), (int) Math.floorMod(neoMilliseconds, 1000L));
 	}
 	
 	/**
@@ -92,7 +94,7 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	/**
 	 * Gets the seconds value for this NeoInstant
 	 * 
-	 * @return long - in neoseconds
+	 * @return time in neoseconds
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -107,7 +109,7 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	 * The nanoAdjustment may be used when increased precision is needed.
 	 * See {@link NeoInstant} for more info on a nanoAdjustment value
 	 * 
-	 * @return int - nanoAdjustment
+	 * @return nanoAdjustment value
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -117,12 +119,12 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	}
 	
 	/**
-	 * Evaluates this NeoInstant in milliseconds.
-	 * 
-	 * <br><br>Formula =
+	 * Evaluates this NeoInstant in milliseconds. <br>
+	 * <br>
+	 * Formula =
 	 * {@link #getSeconds() getSeconds()}*1,000 + {@link #getAdjustment() getAdjustment}/1,000,000.
 	 * 
-	 * @return long - neomilliseconds value
+	 * @return the neomilliseconds value
 	 * @throws ArithmeticException if the resulting value overflows a long.
 	 * 
 	 * @author anandbeh
@@ -133,12 +135,11 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	}
 	
 	/**
-	 * Evaluates this NeoInstant in microseconds.
-	 * 
-	 * <br><br>Formula =
+	 * Evaluates this NeoInstant in microseconds. <br>
+	 * <br>Formula =
 	 * {@link #getSeconds() getSeconds()}*1,000,000 + {@link #getAdjustment() getAdjustment}/1,000.
 	 * 
-	 * @return long - neomicroseconds value
+	 * @return the neomilliseconds value
 	 * @throws ArithmeticException if the resulting value overflows a long.
 	 * 
 	 * @author anandbeh
@@ -149,12 +150,12 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	}
 	
 	/**
-	 * Evaluates this NeoInstant in nanoseconds.
-	 * 
-	 * <br><br>Formula =
+	 * Evaluates this NeoInstant in nanoseconds. <br>
+	 * <br>
+	 * Formula =
 	 * {@link #getSeconds() getSeconds()}*1,000,000,000 + {@link #getAdjustment() getAdjustment}.
 	 * 
-	 * @return long - neonanoseconds value
+	 * @return the neomilliseconds value
 	 * @throws ArithmeticException if the resulting value overflows a long.
 	 * 
 	 * @author anandbeh
@@ -172,7 +173,8 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	@Override
 	public boolean equals(Object object) {
 		if (object instanceof NeoInstant) {
-			return this.compareTo((NeoInstant) object) == 0;
+			NeoInstant other = (NeoInstant) object;
+			return other.getSeconds() == getSeconds() && other.getAdjustment() == getAdjustment();
 		}
 		return false;
 	}
@@ -180,7 +182,7 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	/**
 	 * Compares this NeoInstant to another for ordering.
 	 * 
-	 * @return int - 1 if later than the other instant, -1 if earlier than the other instant, 0 if at the same exact time.
+	 * @return 1 if later than the other instant, -1 if earlier than the other instant, 0 if at the same exact time.
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
@@ -194,7 +196,7 @@ public final class NeoInstant implements Comparable<NeoInstant> {
 	 * Clones this NeoInstant with the same exact amount of
 	 * neoseconds and nanoAdjustment.
 	 * 
-	 * @return NeoInstant - an identical NeoInstant
+	 * @return NeoInstant an identical NeoInstant
 	 * 
 	 * @author anandbeh
 	 * @since NeoTime 1.0
